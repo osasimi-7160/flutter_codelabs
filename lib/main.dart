@@ -14,6 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Startup Name Generator',
+      theme: ThemeData(
+        primaryColor: Colors.white,
+      ),
       home: RandomWords(),
     );
   }
@@ -30,7 +33,8 @@ class RandomWords extends StatefulWidget {
 class RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final Set<WordPair> _saved = Set<WordPair>();
-  final _biggerFont = const TextStyle(fontSize: 18.0);
+  final _biggerFont = TextStyle(fontSize: 18.0);
+
   // #enddocregion RWS-var
 
   void _pushSaved() {
@@ -38,7 +42,7 @@ class RandomWordsState extends State<RandomWords> {
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
           final Iterable<ListTile> tiles = _saved.map(
-                (WordPair pair) {
+            (WordPair pair) {
               return ListTile(
                 title: Text(
                   pair.asPascalCase,
@@ -47,31 +51,30 @@ class RandomWordsState extends State<RandomWords> {
               );
             },
           );
-          final List<Widget> divided = ListTile
-              .divideTiles(
+          final List<Widget> divided = ListTile.divideTiles(
             context: context,
             tiles: tiles,
-          )
-              .toList();
+          ).toList();
 
-          return Scaffold(         // Add 6 lines from here...
+          return Scaffold(
+            // Add 6 lines from here...
             appBar: AppBar(
               title: Text('Saved Suggestions'),
             ),
             body: ListView(children: divided),
-          );                       // ... to here.
+          ); // ... to here.
         },
       ),
     );
   }
-
 
   // #docregion _buildSuggestions
   Widget _buildSuggestions() {
     return ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
+          if (i.isOdd) return Divider();
+          /*2*/
 
           final index = i ~/ 2; /*3*/
           if (index >= _suggestions.length) {
@@ -80,6 +83,7 @@ class RandomWordsState extends State<RandomWords> {
           return _buildRow(_suggestions[index]);
         });
   }
+
   // #enddocregion _buildSuggestions
 
   // #docregion _buildRow
@@ -107,18 +111,16 @@ class RandomWordsState extends State<RandomWords> {
       },
     );
   }
+
   // #enddocregion _buildRow
 
   // #docregion RWS-build
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter スタート'),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved)
-        ]
-      ),
+      appBar: AppBar(title: Text('Flutter スタート'), actions: <Widget>[
+        IconButton(icon: Icon(Icons.list), onPressed: _pushSaved)
+      ]),
       body: _buildSuggestions(),
     );
   }
