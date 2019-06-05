@@ -1,6 +1,8 @@
-# flutter_app
+# flutter_appについてのあれこれメモ
 
 A new Flutter application.
+
+## issuesにcheerme作ってて気になったことをまとめる 
 
 ## Getting Started
 
